@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ExostinScene.unity
+    guid: d5d4ff6c377adb14ea0f408e3ce23c0e
+  - enabled: 1
+    path: Assets/Scenes/GathdarScenes/StartScene.unity
+    guid: a8a4663de483ee842aaf91c8679939e0
+  - enabled: 1
+    path: Assets/Scenes/GathdarScenes/GathdarScene1.unity
+    guid: 2ddfb733e690ab24184d71ccf635d6b9
+  - enabled: 1
+    path: Assets/Scenes/GathdarScenes/GameOverScene.unity
+    guid: a7485f98b3000e84db332f3e960b740b
+  m_configObjects: {}
