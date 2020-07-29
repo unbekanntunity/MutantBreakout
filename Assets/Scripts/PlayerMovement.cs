@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private void WallRunInput() //make sure to call in void Update
     {
         //Wallrun
-        if (Input.GetKey(KeyCode.D) && isWallRight) StartWallrun();
-        if (Input.GetKey(KeyCode.A) && isWallLeft) StartWallrun();
+        if (Input.GetKey(KeyCode.D) && isWallRight && sr.syringe_02) StartWallrun();
+        if (Input.GetKey(KeyCode.A) && isWallLeft && sr.syringe_02) StartWallrun();
     }
 
     private void StartWallrun()
@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Other
     private Rigidbody rb;
+    public Syringe sr;
 
     //Rotation and look
     private float xRotation;
@@ -170,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
             StopCrouch();
 
         //Double Jumping
-        if (Input.GetButtonDown("Jump") && !grounded && doubleJumpsLeft >= 1)
+        if (Input.GetButtonDown("Jump") && !grounded && doubleJumpsLeft >= 1 && sr.syringe_01)
         {
             Jump();
             doubleJumpsLeft--;

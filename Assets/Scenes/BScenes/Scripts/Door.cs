@@ -14,7 +14,7 @@ public class Door : MonoBehaviour
     private bool interact;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         doorAnim = doorObj.GetComponent<Animator>();
         doorAnim.enabled = true;
