@@ -13,12 +13,12 @@ public class EnemyController : MonoBehaviour
     private float speed, agentSpeed;
     private Transform player;
 
-    // private Animator anim;
+    private Animator anim;
     private NavMeshAgent agent;
 
     private void Awake()
     {
-        // anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         if (agent != null) { agentSpeed = agent.speed; }
 
@@ -48,5 +48,10 @@ public class EnemyController : MonoBehaviour
             agent.destination = player.position;
             agent.speed = agentSpeed;
         }
+    }
+
+    private void Update()
+    {
+        anim.SetFloat("Speed", agent.velocity.magnitude);
     }
 }
