@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class EnemyController : MonoBehaviour
 {
@@ -23,7 +22,7 @@ public class EnemyController : MonoBehaviour
         if (agent != null) { agentSpeed = agent.speed; }
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        index = Random.Range(0, waypoints.Length);
+        index = UnityEngine.Random.Range(0, waypoints.Length);
 
         InvokeRepeating("Tick", 0, 0.5f);
 
@@ -53,5 +52,13 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         anim.SetFloat("Speed", agent.velocity.magnitude);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
     }
 }
