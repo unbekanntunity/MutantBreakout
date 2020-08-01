@@ -9,9 +9,10 @@ TagManager:
   - Card
   - dangerous
   - Door
+  - Chip_01
+  - Chip_02
+  - Chip_03
   - Syringe_01
-  - Syringe_02
-  - Syringe_03
   layers:
   - Default
   - TransparentFX

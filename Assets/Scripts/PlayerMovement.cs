@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
     private void WallRunInput() //make sure to call in void Update
     {
         //Wallrun
-        if (Input.GetKey(KeyCode.D) && isWallRight && sr.syringe_02) StartWallrun();
-        if (Input.GetKey(KeyCode.A) && isWallLeft && sr.syringe_02) StartWallrun();
+        if (Input.GetKey(KeyCode.D) && isWallRight /*&& skilltree.WallrunisUnlocked*/) StartWallrun();
+        if (Input.GetKey(KeyCode.A) && isWallLeft /*&& skilltree.WallrunisUnlocked*/) StartWallrun();
     }
 
     private void StartWallrun()
@@ -66,9 +67,13 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform orientation;
 
+    public GameObject pauseMenu;
+    
+
     //Other
     private Rigidbody rb;
-    public Syringe sr;
+    public SkillTree skilltree;    
+    private bool pause;
 
     //Rotation and look
     private float xRotation;
@@ -132,23 +137,59 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         playerScale = transform.localScale;
-        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        pause = false;
+        pauseMenu.SetActive(false);
 
     }
 
     private void FixedUpdate()
     {
-        Movement();
+        if (pause == false)
+        {
+            Movement();
+        }
     }
 
     private void Update()
     {
-        MyInput();
-        Look();
-        CheckForWall();
-        WallRunInput();
+        SetPause();
+
+        if (pause == false)
+        {
+            MyInput();
+            Look();
+            CheckForWall();
+            WallRunInput();
+        }
+
+    }
+
+   
+    private void SetPause()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && pause == false)
+        {
+            pauseMenu.SetActive(true);
+            pause = true;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            Time.timeScale = 0;
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.Q) && pause == true)
+        {
+            pauseMenu.SetActive(false);
+            pause = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            Time.timeScale = 1;
+
+        }
+
     }
 
     /// <summary>
@@ -171,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
             StopCrouch();
 
         //Double Jumping
-        if (Input.GetButtonDown("Jump") && !grounded && doubleJumpsLeft >= 1 && sr.syringe_01)
+        if (Input.GetButtonDown("Jump") && !grounded && doubleJumpsLeft >= 1 )//&& skilltree.DoppleJumpisUnlocked)
         {
             Jump();
             doubleJumpsLeft--;
