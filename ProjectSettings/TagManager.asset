@@ -6,6 +6,13 @@ TagManager:
   tags:
   - Ground
   - Enemy
+  - Card
+  - dangerous
+  - Door
+  - Chip_01
+  - Chip_02
+  - Chip_03
+  - Syringe_01
   layers:
   - Default
   - TransparentFX
@@ -19,7 +26,7 @@ TagManager:
   - Player
   - Enemy
   - Wall
-  - 
+  - Interactable
   - 
   - 
   - 
