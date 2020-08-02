@@ -7,26 +7,25 @@ public class CheckInteract : MonoBehaviour
     public LayerMask interactable;
         
     public Text interacttext;
-    public Text requieredtext;
 
     public Transform playerCamera;
 
     public string RaycastReturn;
 
     public Card card;
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         interacttext.enabled = false;
-        requieredtext.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Creates a raycast and start at the playerCamera and ignore all object except the objects with the layer "interactable"
         RaycastHit t_hit = new RaycastHit();
-        if (Physics.Raycast(playerCamera.position, playerCamera.forward , out t_hit, 10f, interactable))
+        if (Physics.Raycast(playerCamera.position, playerCamera.forward , out t_hit, 5f, interactable))
         {
+            //gets the tag of object which the raycast collided with
             RaycastReturn = t_hit.collider.gameObject.tag;
             if (RaycastReturn == "Door")
             {
@@ -40,14 +39,14 @@ public class CheckInteract : MonoBehaviour
             }
             if (RaycastReturn == "Card") interacttext.text = "Press E to take the card";
             
-            if(RaycastReturn == "Syringes") interacttext.text = "Press E to take the syringe";
+            if(RaycastReturn == "Chip_01" || RaycastReturn == "Chip_02" || RaycastReturn == "Chip_03") interacttext.text = "Press E to take the chip";
             
             interacttext.enabled = true;
 
         }
         else
         {
-                     
+            //resets the string and disable the interactiontext if the raycast hit nothing with the interactbale layer
             RaycastReturn = "";
             interacttext.enabled = false;
         }

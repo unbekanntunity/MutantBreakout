@@ -7,4 +7,14 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene("GathdarScene1");
     }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene("GameOverScene");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
