@@ -202,14 +202,11 @@ public class CheckInteract : MonoBehaviour
     //if a objects leaves the collider of the player this code will executed
     private void OnTriggerExit(Collider obj)
     {
-        if (doorAnim != null && doorTxt != null)
+        if (doorAnim != null && doorTxt != null && obj.gameObject.tag == "Door")
         {
             doorAnim.SetBool("InNear", false);
             doorTxt.text = "Closed";
             doorTxt.color = Color.red;
         }
     }
-
-
-
 }
