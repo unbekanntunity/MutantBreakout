@@ -14,14 +14,14 @@ public class TabGroup : MonoBehaviour
 
 
     public Sprite tabActive;
-    
+
     public TabButton selectedTab;
     public List<GameObject> objectsToSwap;
 
 
     public void Subscribe(TabButton button)
     {
-        if(tabButtons == null)
+        if (tabButtons == null)
         {
             tabButtons = new List<TabButton>();
         }
@@ -55,24 +55,24 @@ public class TabGroup : MonoBehaviour
         button.background.sprite = tabActive;
 
         int index = button.transform.GetSiblingIndex();
-        for(int i = 0; i < objectsToSwap.Count ;i++)
+        for (int i = 0; i < objectsToSwap.Count; i++)
         {
-            if(i == index)
+            if (i == index)
             {
                 objectsToSwap[i].SetActive(true);
             }
             else
             {
-                objectsToSwap[i].SetActive(false) ;
+                objectsToSwap[i].SetActive(false);
             }
         }
     }
 
     public void ResetTabs()
     {
-        foreach(TabButton button in tabButtons)
+        foreach (TabButton button in tabButtons)
         {
-            if (selectedTab!=null && button == selectedTab){ continue; }
+            if (selectedTab != null && button == selectedTab) { continue; }
             button.background.sprite = tabIdle;
         }
     }
