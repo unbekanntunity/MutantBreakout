@@ -1,6 +1,5 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class ControlsHandler : MonoBehaviour
 {
@@ -8,22 +7,17 @@ public class ControlsHandler : MonoBehaviour
     public KeyCode newkey;
     public string input;
 
-   
-
     public KeyCode[] keyCode;
     public string[] keyName;
+
+    public TMP_Text text;
+    public string key;
 
     public void Awake()
     {
         keyCode[0] = KeyCode.Space;
         keyCode[1] = KeyCode.Q;
         keyCode[2] = KeyCode.LeftShift;
-    }
-
-    public void SetKey()
-    {
-
-        checkKey = true;
     }
 
     void OnGUI()
@@ -35,11 +29,16 @@ public class ControlsHandler : MonoBehaviour
             {
                 newkey = e.keyCode;
                 input = "" + e.keyCode;
-                Debug.Log(e.ToString());
-                checkKey = false;   
+                //Debug.Log(e.ToString());
+                Debug.Log(key);
+                Debug.Log(text);
+                AssignKey(newkey, input, key);
+                AssignText(newkey, input, text);
+                checkKey = false;
             }
         }
     }
+
     public void AssignText(KeyCode key, string keyText, TMP_Text textcontainer)
     {
         textcontainer.text = input.ToUpper();

@@ -1,18 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DamageHandler : MonoBehaviour
 {
     public int GameOverScene;
-    public enum damageType
+    public enum DamageType
     {
         deadly_surface
     }
 
-    public void DealDamage(damageType damageType, float damageAmount, GameObject damageReceiver)
+    public void DealDamage(DamageType damageType, float damageAmount, GameObject damageReceiver)
     {
         Health Target = damageReceiver.GetComponent<Health>();
 

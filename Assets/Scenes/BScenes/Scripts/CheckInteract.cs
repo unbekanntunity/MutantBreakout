@@ -1,7 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class CheckInteract : MonoBehaviour
 {
@@ -28,10 +27,11 @@ public class CheckInteract : MonoBehaviour
     private Animator doorAnim;
     private TMP_Text doorTxt;
 
+
     private bool doorcard;
-    private bool interact;
     private float timer;
     private bool timerIsRunning;
+
     void Awake()
     {
         interacttext.enabled = false;
@@ -126,6 +126,7 @@ public class CheckInteract : MonoBehaviour
                     doorAnim.enabled = true;
 
                     doorTxt = RaycastObjReturn.GetComponentInChildren<TMP_Text>();
+
                     doorTxt.text = "Opened";
                     doorTxt.color = Color.green;
                     doorAnim.SetBool("InNear", true);

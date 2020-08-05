@@ -8,6 +8,6 @@ public class DeadlyGround : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        damageHandler.DealDamage(DamageHandler.damageType.deadly_surface, 100f, other.gameObject);
+        damageHandler.DealDamage(DamageHandler.DamageType.deadly_surface, 100f, other.gameObject);
     }
 }
