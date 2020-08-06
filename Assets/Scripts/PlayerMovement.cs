@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
-{
+{ 
     /// <summary>
     /// Wall run Tutorial stuff, scroll down for full movement
     /// </summary>
@@ -19,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private void WallRunInput() //make sure to call in void Update
     {
         //Wallrun
-        if (Input.GetKey(KeyCode.D) && isWallRight /*&& skilltree.WallrunisUnlocked*/) StartWallrun();
-        if (Input.GetKey(KeyCode.A) && isWallLeft /*&& skilltree.WallrunisUnlocked*/) StartWallrun();
+        if (Input.GetKey(KeyCode.D) && isWallRight && skilltree.WallrunisUnlocked) StartWallrun();
+        if (Input.GetKey(KeyCode.A) && isWallLeft && skilltree.WallrunisUnlocked) StartWallrun();
     }
 
     private void StartWallrun()
@@ -68,12 +69,14 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation;
 
     public GameObject pauseMenu;
-    
 
     //Other
-    private Rigidbody rb;
-    public SkillTree skilltree;    
+    public SkillTree skilltree;
+    public ControlsHandler controlsHandler;
+
     private bool pause;
+    private Rigidbody rb;
+
 
     //Rotation and look
     private float xRotation;
@@ -168,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
    
     private void SetPause()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && pause == false)
+        if (Input.GetKeyDown(controlsHandler.keyCode[1]) && pause == false)
         {
             pauseMenu.SetActive(true);
             pause = true;
@@ -179,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
             Time.timeScale = 0;
             
         }
-        else if (Input.GetKeyDown(KeyCode.Q) && pause == true)
+        else if (Input.GetKeyDown(controlsHandler.keyCode[1]) && pause == true)
         {
             pauseMenu.SetActive(false);
             pause = false;
@@ -199,20 +202,20 @@ public class PlayerMovement : MonoBehaviour
     {
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
-        jumping = Input.GetButton("Jump");
-        crouching = Input.GetKey(KeyCode.LeftShift);
+        jumping = Input.GetKeyDown(controlsHandler.keyCode[0]);
+        crouching = Input.GetKey(controlsHandler.keyCode[2]);
 
         ///////////////////////////////////////////
 
 
         //Crouching
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(controlsHandler.keyCode[2]))
             StartCrouch();
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(controlsHandler.keyCode[2]))
             StopCrouch();
 
         //Double Jumping
-        if (Input.GetButtonDown("Jump") && !grounded && doubleJumpsLeft >= 1 )//&& skilltree.DoppleJumpisUnlocked)
+        if (Input.GetKeyDown(controlsHandler.keyCode[0]) && !grounded && doubleJumpsLeft >= 1 && skilltree.DoppleJumpisUnlocked) 
         {
             Jump();
             doubleJumpsLeft--;
@@ -355,16 +358,18 @@ public class PlayerMovement : MonoBehaviour
             readyToJump = false;
 
             //normal jump
-            if (isWallLeft && !Input.GetKey(KeyCode.D) || isWallRight && !Input.GetKey(KeyCode.A))
+            if (isWallLeft && !Input.GetKey(controlsHandler.keyCode[1]) || isWallRight && !Input.GetKey(controlsHandler.keyCode[2]))
             {
                 rb.AddForce(Vector2.up * jumpForce * 1.5f);
                 rb.AddForce(normalVector * jumpForce * 0.5f);
             }
 
             //sidwards wallhop
-            if (isWallRight || isWallLeft && Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) rb.AddForce(-orientation.up * jumpForce * 1f);
+            if (isWallRight || isWallLeft && Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) rb.AddForce(-orientation.up * jumpForce * 1f);
             if (isWallRight && Input.GetKey(KeyCode.A)) rb.AddForce(-orientation.right * jumpForce * 3.2f);
             if (isWallLeft && Input.GetKey(KeyCode.D)) rb.AddForce(orientation.right * jumpForce * 3.2f);
+
+    
 
             //Always add forward force
             rb.AddForce(orientation.forward * jumpForce * 1f);
