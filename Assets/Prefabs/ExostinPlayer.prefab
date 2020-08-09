@@ -142,6 +142,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 0}
   skilltree: {fileID: 0}
   controlsHandler: {fileID: 0}
+  sensitivityHandler: {fileID: 0}
   moveSpeed: 4500
   maxSpeed: 20
   grounded: 0
