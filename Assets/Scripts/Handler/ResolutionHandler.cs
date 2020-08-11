@@ -28,7 +28,6 @@ public class ResolutionHandler : MonoBehaviour
 
     private void SetResolutionText(Resolution resolution)
     {
-        Debug.Log(resolution);
         resolutionText.text = "" + resolution;
     }
 
