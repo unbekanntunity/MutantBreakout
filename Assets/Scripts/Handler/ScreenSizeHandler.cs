@@ -37,9 +37,6 @@ public class ScreenSizeHandler : MonoBehaviour
         fullscreen.isOn = false;
         windowed.isOn = true;
         Screen.fullScreenMode = FullScreenMode.Windowed;
-
-        Debug.Log("Scrennsize resetted");
-
     }
 
     public void Fullscreen(bool IsFullScreen)
@@ -52,7 +49,6 @@ public class ScreenSizeHandler : MonoBehaviour
 
             windowed.isOn = false;
             fullscreen.isOn = true;
-            Debug.Log("full");
             Screen.fullScreenMode = FullScreenMode.Windowed;
         }
 
@@ -68,8 +64,7 @@ public class ScreenSizeHandler : MonoBehaviour
 
             windowed.isOn = true;
             fullscreen.isOn = false;
-
-            Debug.Log("window");
+            
             Screen.fullScreenMode = FullScreenMode.Windowed;
         }
 
