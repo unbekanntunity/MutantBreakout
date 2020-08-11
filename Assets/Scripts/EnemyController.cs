@@ -51,7 +51,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
-        anim.SetFloat("Speed", agent.velocity.magnitude);
+        anim.SetFloat("Vertical", agent.velocity.magnitude, 0.1f, Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
