@@ -17,7 +17,6 @@ public class CheckInteract : MonoBehaviour
         
     public Image door_icon;
 
-
     public Image DJ_icon;
     public Image WR_icon;
     public Image GH_icon;
@@ -27,7 +26,6 @@ public class CheckInteract : MonoBehaviour
 
     private Animator doorAnim;
     private TMP_Text doorTxt;
-
 
     private bool doorcard;
     public float timer;
@@ -68,7 +66,6 @@ public class CheckInteract : MonoBehaviour
             }
         }
 
-
         //Creates a raycast and start at the playerCamera and ignore all object except the objects with the layer "interactable"
         RaycastHit t_hit = new RaycastHit();
         if (Physics.Raycast(playerCamera.position, playerCamera.forward, out t_hit, 6f, interactable))
@@ -103,9 +100,6 @@ public class CheckInteract : MonoBehaviour
             RaycastReturn = "";
             interacttext.enabled = false;
         }
-
-
-
     }
 
     //if a objects stay in the collider of the player this code will executed
@@ -115,7 +109,6 @@ public class CheckInteract : MonoBehaviour
         RaycastHit t_hit = new RaycastHit();
         if (Physics.Raycast(playerCamera.position, playerCamera.forward, out t_hit, 6f, interactable))
         {
-
             RaycastObjReturn = t_hit.collider.gameObject;
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -131,7 +124,6 @@ public class CheckInteract : MonoBehaviour
                     doorTxt.text = "Opened";
                     doorTxt.color = Color.green;
                     doorAnim.SetBool("InNear", true);
-
                 }
 
                 if (RaycastReturn == "Door" && doorcard == false)
@@ -148,7 +140,7 @@ public class CheckInteract : MonoBehaviour
                     doorcard = true;
                     door_icon.enabled = true;
                     RaycastObjReturn.SetActive(false);
-                    notification.text = "You received the door card";
+                    notification.text = "You picked up the door card";
                     notification.enabled = true;
                     RaycastObjReturn.SetActive(false);
                 }
@@ -162,7 +154,7 @@ public class CheckInteract : MonoBehaviour
                     DJ_icon.enabled = true;
                     RaycastObjReturn.SetActive(false);
                     skillHandler.UnlockableSkills[1] = true; 
-                    notification.text = "You can use dopplejumps now";
+                    notification.text = "You can now double jump";
                     notification.enabled = true;
                 }
                 if (RaycastReturn == "Chip_02")
@@ -174,7 +166,7 @@ public class CheckInteract : MonoBehaviour
                     WR_icon.enabled = true;
                     RaycastObjReturn.SetActive(false);
                     skillHandler.UnlockableSkills[2] = true; 
-                    notification.text = "You can wall along the wall now";
+                    notification.text = "You can now run along the wall";
                     notification.enabled = true;
 
                 }
@@ -187,7 +179,7 @@ public class CheckInteract : MonoBehaviour
                     GH_icon.enabled = true;
                     RaycastObjReturn.SetActive(false);
                     skillHandler.UnlockableSkills[3] = true;
-                    notification.text = "You can use a grabbling hook now";
+                    notification.text = "You can now use a grappling hook";
                     notification.enabled = true;
                 }
             }
