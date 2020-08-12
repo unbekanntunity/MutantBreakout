@@ -6,6 +6,12 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// Wall run Tutorial stuff, scroll down for full movement
     /// </summary>
+    /// 
+
+    // Animator
+    private Animator anim;
+    float Vertical_f;
+    float Horizontal_f;
 
     //Wallrunning
     public LayerMask whatIsWall;
@@ -131,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         startMaxSpeed = maxSpeed;
     }
@@ -164,8 +171,12 @@ public class PlayerMovement : MonoBehaviour
             WallRunInput();
         }
 
-    }
+        Vertical_f = Input.GetAxisRaw("Vertical");
+        Horizontal_f = Input.GetAxisRaw("Horizontal");
 
+        anim.SetFloat("Forward", Vertical_f, 0.1f, Time.deltaTime);
+        anim.SetFloat("Side", Horizontal_f, 0.1f, Time.deltaTime);
+    }
 
     private void SetPause()
     {
