@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-//author: B_Live
-
 public class SensitivityHandler : MonoBehaviour
 {
     public float sensMultiplierX = 50f;
@@ -20,6 +18,8 @@ public class SensitivityHandler : MonoBehaviour
     public Toggle reverseXtoggle;
     public Toggle reverseYtoggle;
 
+    public Image checkx;
+    public Image checky;
 
     private int reverseX;
     private int reverseY;
@@ -29,6 +29,7 @@ public class SensitivityHandler : MonoBehaviour
 
     private void Awake()
     {
+
         reverseX = PlayerPrefs.GetInt(REVERSEX_PLAYERPREF);
         reverseY = PlayerPrefs.GetInt(REVERSEY_PLAYERPREF);
 
@@ -37,23 +38,23 @@ public class SensitivityHandler : MonoBehaviour
         if (reverseX == 0)
         {
             sensMultiplierX = PlayerPrefs.GetFloat(SENSITIVITYX_PLAYERPREF);
-            reverseXtoggle.isOn = false;
+            checkx.enabled = false;
         }
         if (reverseX == 1)
         {
             sensMultiplierX = -PlayerPrefs.GetFloat(SENSITIVITYX_PLAYERPREF);
-            reverseXtoggle.isOn = true;
+            checkx.enabled = true;
         }
 
         if (reverseY == 0)
         {
             sensMultiplierY = PlayerPrefs.GetFloat(SENSITIVITYY_PLAYERPREF);
-            reverseYtoggle.isOn = false;
+            checky.enabled = false;
         }
-        if (reverseY== 1)
+        if (reverseY == 1)
         {
             sensMultiplierY = -PlayerPrefs.GetFloat(SENSITIVITYY_PLAYERPREF);
-            reverseYtoggle.isOn = true;
+            checky.enabled = true;
         }
     }
 
@@ -84,6 +85,7 @@ public class SensitivityHandler : MonoBehaviour
             sensMultiplierX = -slidersensitivity;
         }
         PlayerPrefs.SetFloat(SENSITIVITYX_PLAYERPREF, slidersensitivity);
+        PlayerPrefs.Save();
 
 
     }
@@ -95,6 +97,7 @@ public class SensitivityHandler : MonoBehaviour
             sensMultiplierY = -slidersensitivitys;
         }
         PlayerPrefs.SetFloat(SENSITIVITYY_PLAYERPREF, slidersensitivitys);
+        PlayerPrefs.Save();
     }
 
     public void ReverseX()
@@ -104,16 +107,17 @@ public class SensitivityHandler : MonoBehaviour
         if (reverseX == 0)
         {
             reverseX = 1;
-            reverseXtoggle.isOn = true;
+            checkx.enabled = false;
         }
         else if (reverseX == 1)
         {
             reverseX = 0;
 
-            reverseXtoggle.isOn = false;
+            checkx.enabled = true;
 
         }
         PlayerPrefs.SetInt(REVERSEX_PLAYERPREF, reverseX);
+        PlayerPrefs.Save();
     }
     public void ReverseY()
     {
@@ -122,15 +126,15 @@ public class SensitivityHandler : MonoBehaviour
         if (reverseY == 0)
         {
             reverseY = 1;
-            reverseYtoggle.isOn = true;
+            checky.enabled = false;
         }
         else if (reverseY == 1)
         {
             reverseY = 0;
 
-            reverseYtoggle.isOn = false;
-
+            checky.enabled = true;
         }
         PlayerPrefs.SetInt(REVERSEY_PLAYERPREF, reverseY);
+        PlayerPrefs.Save();
     }
 }

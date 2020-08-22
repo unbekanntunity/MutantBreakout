@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-//author: B_Live
-
 public class CheckInteract : MonoBehaviour
 {
     public LayerMask interactable;
@@ -14,18 +12,19 @@ public class CheckInteract : MonoBehaviour
     public Transform playerCamera;
 
     public SkillHandler skillHandler;
-        
+
     public Image door_icon;
 
-    public Image DJ_icon;
-    public Image WR_icon;
-    public Image GH_icon;
+    public string[] compareTags;
+    public string[] notificationText;
+    public Image[] Icons;
 
     public string RaycastReturn;
     public GameObject RaycastObjReturn;
 
     private Animator doorAnim;
     private TMP_Text doorTxt;
+
 
     private bool doorcard;
     public float timer;
@@ -35,16 +34,12 @@ public class CheckInteract : MonoBehaviour
     {
         interacttext.enabled = false;
         doorcard = false;
-        door_icon.enabled = false;
-        GH_icon.enabled = false;
-        DJ_icon.enabled = false;
-        WR_icon.enabled = false;
+
+        for (int i = 0; i < Icons.Length; i++) Icons[i].enabled = false;
 
     }
     void Update()
     {
-
-        //Set a timer for the notifications
         if (timerIsRunning)
         {
 
@@ -65,6 +60,7 @@ public class CheckInteract : MonoBehaviour
                 timerIsRunning = false;
             }
         }
+
 
         //Creates a raycast and start at the playerCamera and ignore all object except the objects with the layer "interactable"
         RaycastHit t_hit = new RaycastHit();
@@ -100,6 +96,9 @@ public class CheckInteract : MonoBehaviour
             RaycastReturn = "";
             interacttext.enabled = false;
         }
+
+
+
     }
 
     //if a objects stay in the collider of the player this code will executed
@@ -109,78 +108,43 @@ public class CheckInteract : MonoBehaviour
         RaycastHit t_hit = new RaycastHit();
         if (Physics.Raycast(playerCamera.position, playerCamera.forward, out t_hit, 6f, interactable))
         {
+
             RaycastObjReturn = t_hit.collider.gameObject;
             if (Input.GetKeyDown(KeyCode.E))
             {
                 notification.enabled = true;
 
-                if (RaycastReturn == "Door" && doorcard == true)
+                for (int i = 0; i < compareTags.Length; i++)
                 {
-                    doorAnim = RaycastObjReturn.GetComponent<Animator>();
-                    doorAnim.enabled = true;
+                    if (RaycastReturn == compareTags[i])
+                    {
 
-                    doorTxt = RaycastObjReturn.GetComponentInChildren<TMP_Text>();
 
-                    doorTxt.text = "Opened";
-                    doorTxt.color = Color.green;
-                    doorAnim.SetBool("InNear", true);
-                }
+                        if (RaycastObjReturn.GetComponent<Animator>() != null && RaycastObjReturn.GetComponentInChildren<TMP_Text>() != null && doorcard)
+                        {
+                            doorAnim = RaycastObjReturn.GetComponent<Animator>();
+                            doorAnim.enabled = true;
 
-                if (RaycastReturn == "Door" && doorcard == false)
-                {
-                    notification.alpha = 1;
-                }
+                            doorTxt = RaycastObjReturn.GetComponentInChildren<TMP_Text>();
 
-                if (RaycastReturn == "Card")
-                {
-                    notification.alpha = 1;
-                    timer = 3;
-                    timerIsRunning = true;
+                            doorTxt.text = "Opened";
+                            doorTxt.color = Color.green;
+                            doorAnim.SetBool("InNear", true);
+                        }
+                        else
+                        {
+                            if (RaycastReturn == "Card") doorcard = true;
 
-                    doorcard = true;
-                    door_icon.enabled = true;
-                    RaycastObjReturn.SetActive(false);
-                    notification.text = "You picked up the door card";
-                    notification.enabled = true;
-                    RaycastObjReturn.SetActive(false);
-                }
+                            ResetTimer();
+                            if (i > 0) Icons[i - 1].enabled = true;
 
-                if (RaycastReturn == "Chip_01")
-                {
-                    notification.alpha = 1;
-                    timer = 3;
-                    timerIsRunning = true;
+                            RaycastObjReturn.SetActive(false);
+                            notification.text = notificationText[i];
+                            notification.enabled = true;
 
-                    DJ_icon.enabled = true;
-                    RaycastObjReturn.SetActive(false);
-                    skillHandler.UnlockableSkills[1] = true; 
-                    notification.text = "You can now double jump";
-                    notification.enabled = true;
-                }
-                if (RaycastReturn == "Chip_02")
-                {
-                    notification.alpha = 1;
-                    timer = 3;
-                    timerIsRunning = true;
-
-                    WR_icon.enabled = true;
-                    RaycastObjReturn.SetActive(false);
-                    skillHandler.UnlockableSkills[2] = true; 
-                    notification.text = "You can now run along the wall";
-                    notification.enabled = true;
-
-                }
-                if (RaycastReturn == "Chip_03")
-                {
-                    notification.alpha = 1;
-                    timer = 3;
-                    timerIsRunning = true;
-
-                    GH_icon.enabled = true;
-                    RaycastObjReturn.SetActive(false);
-                    skillHandler.UnlockableSkills[3] = true;
-                    notification.text = "You can now use a grappling hook";
-                    notification.enabled = true;
+                            skillHandler.UnlockableSkills[(i - 1)] = true;
+                        }
+                    }
                 }
             }
         }
@@ -199,5 +163,13 @@ public class CheckInteract : MonoBehaviour
             doorTxt.text = "Closed";
             doorTxt.color = Color.red;
         }
+    }
+
+    private void ResetTimer()
+    {
+
+        notification.alpha = 1;
+        timer = 3;
+        timerIsRunning = true;
     }
 }
